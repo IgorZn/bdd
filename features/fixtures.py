@@ -28,7 +28,7 @@ chrome_options = Options()
 # chrome_options.add_argument("--start-maximized")
 # chrome_options.add_argument("--headless")
 # chrome_options.add_argument("--no-sandbox")
-chrome_options.binary_location = get_binary_location()
+# chrome_options.binary_location = get_binary_location()
 
 
 def browser_chrome(context, timeout=30, **kwargs):
@@ -37,5 +37,5 @@ def browser_chrome(context, timeout=30, **kwargs):
     context.browser = BasePage(browser)
     yield context.browser
     # -- CLEANUP-FIXTURE PART:
-    time.sleep(3)
+    time.sleep(2)
     context.browser.close()
