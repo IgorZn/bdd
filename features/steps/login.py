@@ -2,12 +2,12 @@ from behave import given, when, then
 from features.lib.loginpage import LoginPage
 
 @given('Open {url}')
-def visit_login(context, url):
+def step_impl(context, url):
     assert url in context.browser.get_url
 
 
 @when('send login {login}, password {password} and log in')
-def login(context, login, password):
+def step_impl(context, login, password):
     loginpage = LoginPage()
     context.browser.find_element_wait(loginpage.locators['password']).send_keys(password)
     context.browser.find_element_wait(loginpage.locators['login']).send_keys(login)
@@ -23,5 +23,5 @@ def step_impl(context):
 
 
 @then(u'the user should be redirected to homepage')
-def homepage(context):
+def step_impl(context):
     pass
