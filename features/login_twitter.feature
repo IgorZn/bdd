@@ -7,5 +7,5 @@ Feature: Login into twitter
   @sunny @smoke @sanity
     Scenario: Valid login
         Given Open https://twitter.com/
-        When send login 5000700@mail.ru, password 3yGWsqrA and log in
+        When send login 5000700@mail.ru, password ABC123ABC and log in
         Then the user should be redirected to homepage
