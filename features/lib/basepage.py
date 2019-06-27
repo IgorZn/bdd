@@ -7,18 +7,24 @@ import traceback
 import time
 
 class BasePage(object):
+    __TIMEOUT = 10
 
     def __init__(self, browser, base_url='http://twitter.com/'):
         self.base_url = base_url
         self.browser = browser
-        self._web_driver_wait = WebDriverWait(browser, self.timeout)
+        self._web_driver_wait = WebDriverWait(browser, self.__TIMEOUT)
         self.timeout = 30
+        self.start()
+
+    def start(self):
+        self.browser.implicitly_wait(10)
+        self.browser.get(self.base_url)
 
     def find_element(self, *locator):
         return self.browser.find_element(*locator)
 
     def find_element_wait(self, *locator):
-        return self._web_driver_wait.until(EC.visibility_of_element_located((By.XPATH, locator[1])))
+        return self._web_driver_wait.until(EC.visibility_of_element_located((By.XPATH, self.get_value(*locator))))
 
     def visit(self, url):
         self.browser.get(url)
@@ -26,4 +32,17 @@ class BasePage(object):
     def hover(self, element):
             ActionChains(self.browser).move_to_element(element).perform()
             time.sleep(5)
+
+    def close(self):
+        self.browser.close()
+
+    @property
+    def get_url(self):
+        return str(self.browser.current_url)
+
+    def get_title(self):
+        return self.browser.title
+
+    def get_value(self, locator):
+        return locator[1]
 

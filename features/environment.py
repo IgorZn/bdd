@@ -6,8 +6,9 @@ from features.fixtures import browser_chrome
 def before_all(context):
     pass
 
-def before_feature(context):
+def before_feature(context, feature):
     use_fixture(browser_chrome, context)
+
 
 
 
