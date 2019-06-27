@@ -4,7 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import *
 import traceback
-import time
+import time, os
 
 class BasePage(object):
     __TIMEOUT = 10
@@ -24,7 +24,10 @@ class BasePage(object):
         return self.browser.find_element(*locator)
 
     def find_element_wait(self, *locator):
-        return self._web_driver_wait.until(EC.visibility_of_element_located((By.XPATH, self.get_value(*locator))))
+        try:
+            return self._web_driver_wait.until(EC.visibility_of_element_located((By.XPATH, self.get_value(*locator))))
+        except TimeoutException:
+            self.browser.save_screenshot('.'+os.sep+os.getcwd()+os.sep+'error.png')
 
     def visit(self, url):
         self.browser.get(url)
@@ -38,11 +41,14 @@ class BasePage(object):
 
     @property
     def get_url(self):
-        return str(self.browser.current_url)
+        return self.browser.current_url
 
     def get_title(self):
         return self.browser.title
 
     def get_value(self, locator):
         return locator[1]
+
+    def screenshot(self, filename):
+        self.browser.save_screenshot('screenie.png')
 
