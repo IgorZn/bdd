@@ -25,16 +25,17 @@ class BasePage(object):
 
     def find_element_wait(self, *locator):
         try:
+            self.browser.save_screenshot('error_screenie.png')
             return self._web_driver_wait.until(EC.visibility_of_element_located((By.XPATH, self.get_value(*locator))))
         except TimeoutException:
-            self.browser.save_screenshot('.'+os.sep+os.getcwd()+os.sep+'error.png')
+            self.browser.save_screenshot('error_screenie.png')
 
     def visit(self, url):
         self.browser.get(url)
 
     def hover(self, element):
-            ActionChains(self.browser).move_to_element(element).perform()
-            time.sleep(5)
+        ActionChains(self.browser).move_to_element(element).perform()
+        time.sleep(5)
 
     def close(self):
         self.browser.close()

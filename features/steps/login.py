@@ -14,7 +14,7 @@ def step_impl(context, login, password):
     context.browser.find_element_wait(loginpage.locators['submit']).click()
 
 
-@then(u'a login error message should display')
+@then('a login error message should display')
 def step_impl(context):
     message = context.browser.contains_content(
         LoginPage.locator_dictionary['error_message'], 5)
@@ -22,6 +22,6 @@ def step_impl(context):
 
 
 
-@then(u'the user should be redirected to homepage')
+@then('the user should be redirected to homepage')
 def step_impl(context):
     pass
